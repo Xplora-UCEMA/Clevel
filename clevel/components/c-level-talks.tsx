@@ -1,12 +1,18 @@
 'use client'
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "./ui/card"
 import { Calendar, Clock, MapPin, Users, Lightbulb, MessageSquare, Network } from 'lucide-react'
 import Image from "next/image"
 import { useEffect, useState } from 'react'
 
 export function CLevelTalks() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const testimonials = [
+    "Una experiencia única para conectar con líderes de la industria y aprender de sus experiencias.",
+    "El evento superó mis expectativas. Obtuve insights valiosos para mi negocio.",
+    "La calidad de los speakers y la organización fueron excepcionales.",
+    "Una oportunidad increíble para hacer networking y crecer profesionalmente."
+  ]
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -15,8 +21,9 @@ export function CLevelTalks() {
     script.id = "luma-checkout"
     
     script.onload = () => {
-      if (window.luma) {
-        window.luma.initCheckout()
+      const lumaWindow = window as { luma?: { initCheckout: () => void } }
+      if (lumaWindow.luma) {
+        lumaWindow.luma.initCheckout()
       }
     }
     
@@ -33,14 +40,7 @@ export function CLevelTalks() {
       }
       clearInterval(testimonialInterval)
     }
-  }, [])
-
-  const testimonials = [
-    "Una experiencia única para conectar con líderes de la industria y aprender de sus experiencias.",
-    "El evento superó mis expectativas. Obtuve insights valiosos para mi negocio.",
-    "La calidad de los speakers y la organización fueron excepcionales.",
-    "Una oportunidad increíble para hacer networking y crecer profesionalmente."
-  ]
+  }, [testimonials.length])
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#000000] via-[#230052] to-[#A31F6B]" style={{ backgroundImage: 'linear-gradient(12deg, #000000, #230052, #A31F6B)' }}>
@@ -49,14 +49,14 @@ export function CLevelTalks() {
         <div className="container mx-auto">
           <div className="flex justify-between items-start mb-12">
             <Image
-              src="/images/logos/Xplora.png"
+              src="/images/logos/xplora.png"
               alt="Xplora Logo"
               width={150}
               height={50}
               className="h-12 w-auto"
             />
             <Image
-              src="/images/logos/UCEMA.png"
+              src="/images/logos/ucema.png"
               alt="UCEMA Logo"
               width={180}
               height={60}
@@ -180,7 +180,7 @@ export function CLevelTalks() {
                       className="object-cover rounded-lg"
                     />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-[#cdff43]">{speaker.name}</h3>
+                  <h3 className="text-xl font-bold mb-2">{speaker.name}</h3>
                   <p className="text-gray-200 mb-2">{speaker.role}</p>
                   <p className="text-sm text-gray-300">{speaker.description}</p>
                 </CardContent>

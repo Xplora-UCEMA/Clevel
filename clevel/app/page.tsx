@@ -1,4 +1,4 @@
-import { CLevelTalks } from "@/components/c-level-talks"
+import { CLevelTalks } from "../components/c-level-talks"
 
 export default function Page() {
   return <CLevelTalks />
