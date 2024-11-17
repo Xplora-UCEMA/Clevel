@@ -5,42 +5,94 @@ import { Calendar, Clock, MapPin, Users, Lightbulb, MessageSquare, Network } fro
 import Image from "next/image"
 import { useEffect, useState } from 'react'
 
+// Definir una sola vez los testimonios
+const TESTIMONIALS = [
+  "Una experiencia única para conectar con líderes de la industria y aprender de sus experiencias.",
+  "El evento superó mis expectativas. Obtuve insights valiosos para mi negocio.",
+  "La calidad de los speakers y la organización fueron excepcionales.",
+  "Una oportunidad increíble para hacer networking y crecer profesionalmente."
+];
+
+// Definir la interfaz para la ventana de Luma
+interface LumaWindow extends Window {
+  luma?: {
+    initCheckout: () => void;
+  };
+}
+
+// Definir las rutas de las imágenes
+const IMAGES = {
+  logos: {
+    xplora: "/logos/Xplora.png",
+    ucema: "/logos/UCEMA.png",
+    clevel: "/logos/clevel.png"
+  },
+  speakers: {
+    alex: "/Speakers/Foto-Alex.png",
+    valeria: "/Speakers/Foto-Valeria.png",
+    tomas: "/Speakers/Foto-Tomas.png"
+  }
+};
+
+// Array de speakers actualizado
+const SPEAKERS = [
+  {
+    name: "Alex Waltuch",
+    role: "Líder Comercial en Google Argentina",
+    company: "Google",
+    image: IMAGES.speakers.alex,
+    description: "Con más de 10 años de experiencia en el sector tecnológico, Alex lidera estrategias comerciales innovadoras en Google Argentina."
+  },
+  {
+    name: "Valeria Abadi",
+    role: "SVP Brand Global en Globant",
+    company: "Globant",
+    image: IMAGES.speakers.valeria,
+    description: "Valeria es una experta en branding global, impulsando la visión de Globant en mercados internacionales con estrategias creativas y efectivas."
+  },
+  {
+    name: "Tomás Mindlin",
+    role: "CEO y Co-Fundador de Tapi",
+    company: "Tapi",
+    image: IMAGES.speakers.tomas,
+    description: "Emprendedor serial, Tomás ha revolucionado la industria fintech con Tapi, ofreciendo soluciones innovadoras para pagos digitales."
+  }
+];
+
 export function CLevelTalks() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
-  const testimonials = [
-    "Una experiencia única para conectar con líderes de la industria y aprender de sus experiencias.",
-    "El evento superó mis expectativas. Obtuve insights valiosos para mi negocio.",
-    "La calidad de los speakers y la organización fueron excepcionales.",
-    "Una oportunidad increíble para hacer networking y crecer profesionalmente."
-  ]
 
   useEffect(() => {
-    const script = document.createElement('script')
-    script.src = "https://embed.lu.ma/checkout-button.js"
-    script.async = true
-    script.id = "luma-checkout"
-    
-    script.onload = () => {
-      const lumaWindow = window as { luma?: { initCheckout: () => void } }
-      if (lumaWindow.luma) {
-        lumaWindow.luma.initCheckout()
-      }
-    }
-    
-    document.body.appendChild(script)
+    // Manejar el script de Luma
+    const loadLumaScript = () => {
+      const script = document.createElement('script');
+      script.src = "https://embed.lu.ma/checkout-button.js";
+      script.async = true;
+      script.id = "luma-checkout";
+      
+      script.onload = () => {
+        const lumaWindow = window as LumaWindow;
+        if (lumaWindow.luma?.initCheckout) {
+          lumaWindow.luma.initCheckout();
+        }
+      };
+      
+      document.body.appendChild(script);
+    };
 
+    // Manejar el intervalo de testimonios
     const testimonialInterval = setInterval(() => {
-      setTestimonialIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
-    }, 2000)
+      setTestimonialIndex((prevIndex) => (prevIndex + 1) % TESTIMONIALS.length);
+    }, 2000);
 
+    // Cargar el script de Luma
+    loadLumaScript();
+
+    // Cleanup
     return () => {
-      const existingScript = document.getElementById("luma-checkout")
-      if (existingScript) {
-        document.body.removeChild(existingScript)
-      }
-      clearInterval(testimonialInterval)
-    }
-  }, [testimonials.length])
+      clearInterval(testimonialInterval);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#000000] via-[#230052] to-[#A31F6B]" style={{ backgroundImage: 'linear-gradient(12deg, #000000, #230052, #A31F6B)' }}>
@@ -49,14 +101,14 @@ export function CLevelTalks() {
         <div className="container mx-auto">
           <div className="flex justify-between items-start mb-12">
             <Image
-              src="/images/logos/xplora.png"
+              src={IMAGES.logos.xplora}
               alt="Xplora Logo"
               width={150}
               height={50}
               className="h-12 w-auto"
             />
             <Image
-              src="/images/logos/ucema.png"
+              src={IMAGES.logos.ucema}
               alt="UCEMA Logo"
               width={180}
               height={60}
@@ -67,7 +119,7 @@ export function CLevelTalks() {
           <div className="text-center">
             <div className="mb-6">
               <Image
-                src="/images/logos/clevel.png"
+                src={IMAGES.logos.clevel}
                 alt="C-Level Talks"
                 width={484}
                 height={212}
@@ -114,7 +166,7 @@ export function CLevelTalks() {
             <Card className="bg-[#230052] text-white h-40 flex items-center justify-center">
               <CardContent className="p-6 text-center">
                 <p className="text-gray-200 text-lg transition-opacity duration-500">
-                  {testimonials[testimonialIndex]}
+                  {TESTIMONIALS[testimonialIndex]}
                 </p>
               </CardContent>
             </Card>
@@ -147,29 +199,7 @@ export function CLevelTalks() {
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">Speakers</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Alex Waltuch",
-                role: "Líder Comercial en Google Argentina",
-                company: "Google",
-                image: "/images/speakers/Foto-Alex.png",
-                description: "Con más de 10 años de experiencia en el sector tecnológico, Alex lidera estrategias comerciales innovadoras en Google Argentina."
-              },
-              {
-                name: "Valeria Abadi",
-                role: "SVP Brand Global en Globant",
-                company: "Globant",
-                image: "/images/speakers/Foto-Valeria.png",
-                description: "Valeria es una experta en branding global, impulsando la visión de Globant en mercados internacionales con estrategias creativas y efectivas."
-              },
-              {
-                name: "Tomás Mindlin",
-                role: "CEO y Co-Fundador de Tapi",
-                company: "Tapi",
-                image: "/images/speakers/Foto-Tomas.png",
-                description: "Emprendedor serial, Tomás ha revolucionado la industria fintech con Tapi, ofreciendo soluciones innovadoras para pagos digitales."
-              }
-            ].map((speaker) => (
+            {SPEAKERS.map((speaker) => (
               <Card key={speaker.name} className="bg-[#230052]/50 border-[#cdff43] border p-4 flex flex-col items-center text-center">
                 <CardContent className="p-0">
                   <div className="w-32 h-32 relative mb-4 mx-auto">
