@@ -106,6 +106,8 @@ export function CLevelTalks() {
               width={150}
               height={50}
               className="h-12 w-auto"
+              priority
+              quality={100}
             />
             <Image
               src={IMAGES.logos.ucema}
@@ -208,6 +210,8 @@ export function CLevelTalks() {
                       alt={speaker.name}
                       fill
                       className="object-cover rounded-lg"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={100}
                     />
                   </div>
                   <h3 className="text-xl font-bold mb-2">{speaker.name}</h3>
@@ -243,5 +247,29 @@ export function CLevelTalks() {
         </div>
       </footer>
     </div>
+  )
+}
+
+export function GoogleTagManager() {
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-KF9SCBK6');`
+        }}
+      />
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-KF9SCBK6"
+          height="0"
+          width="0"
+          style={{ display: 'none', visibility: 'hidden' }}
+        />
+      </noscript>
+    </>
   )
 }
