@@ -25,7 +25,10 @@ const IMAGES = {
   logos: {
     xplora: "/logos/Xplora.png",
     ucema: "/logos/UCEMA.png",
-    clevel: "/logos/clevel.png"
+    clevel: "/logos/clevel.png",
+    google: "/logos/google.png",
+    globant: "/logos/globant.png",
+    tapi: "/logos/tapi.png"
   },
   speakers: {
     alex: "/Speakers/Foto-Alex.png",
@@ -38,22 +41,25 @@ const IMAGES = {
 const SPEAKERS = [
   {
     name: "Alex Waltuch",
-    role: "Líder Comercial en Google Argentina",
+    role: "Sector Lead Finance, Travel & Government",
     company: "Google",
+    companyLogo: IMAGES.logos.google,
     image: IMAGES.speakers.alex,
     description: "Con más de 10 años de experiencia en el sector tecnológico, Alex lidera estrategias comerciales innovadoras en Google Argentina."
   },
   {
     name: "Valeria Abadi",
-    role: "SVP Brand Global en Globant",
+    role: "SVP Brand Global",
     company: "Globant",
+    companyLogo: IMAGES.logos.globant,
     image: IMAGES.speakers.valeria,
     description: "Valeria es una experta en branding global, impulsando la visión de Globant en mercados internacionales con estrategias creativas y efectivas."
   },
   {
     name: "Tomás Mindlin",
-    role: "CEO y Co-Fundador de Tapi",
+    role: "CEO y Co-Fundador",
     company: "Tapi",
+    companyLogo: IMAGES.logos.tapi,
     image: IMAGES.speakers.tomas,
     description: "Emprendedor serial, Tomás ha revolucionado la industria fintech con Tapi, ofreciendo soluciones innovadoras para pagos digitales."
   }
@@ -214,8 +220,18 @@ export function CLevelTalks() {
                       quality={100}
                     />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{speaker.name}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-[#cdff43]">{speaker.name}</h3>
                   <p className="text-gray-200 mb-2">{speaker.role}</p>
+                  <div className="h-12 w-24 relative mx-auto mb-4">
+                    <Image
+                      src={speaker.companyLogo}
+                      alt={speaker.company}
+                      fill
+                      className="object-contain"
+                      sizes="96px"
+                      quality={100}
+                    />
+                  </div>
                   <p className="text-sm text-gray-300">{speaker.description}</p>
                 </CardContent>
               </Card>
