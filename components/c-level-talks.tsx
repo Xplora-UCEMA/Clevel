@@ -43,23 +43,13 @@ const SPEAKERS = [
     name: "Alex Waltuch",
     role: "Sector Lead Finance, Travel & Government",
     company: "Google",
-    companyLogo: IMAGES.logos.google,
     image: IMAGES.speakers.alex,
     description: "Con más de 10 años de experiencia en el sector tecnológico, Alex lidera estrategias comerciales innovadoras en Google Argentina."
-  },
-  {
-    name: "Valeria Abadi",
-    role: "SVP Brand Global",
-    company: "Globant",
-    companyLogo: IMAGES.logos.globant,
-    image: IMAGES.speakers.valeria,
-    description: "Valeria es una experta en branding global, impulsando la visión de Globant en mercados internacionales con estrategias creativas y efectivas."
   },
   {
     name: "Tomás Mindlin",
     role: "CEO y Co-Fundador",
     company: "Tapi",
-    companyLogo: IMAGES.logos.tapi,
     image: IMAGES.speakers.tomas,
     description: "Emprendedor serial, Tomás ha revolucionado la industria fintech con Tapi, ofreciendo soluciones innovadoras para pagos digitales."
   }
@@ -203,14 +193,14 @@ export function CLevelTalks() {
       </section>
 
       {/* Speakers Section */}
-      <section className="text-white py-12 px-4">
+      <section className="py-16 px-4">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Speakers</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className="text-3xl font-bold text-center text-white mb-12">Speakers</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {SPEAKERS.map((speaker) => (
-              <Card key={speaker.name} className="bg-[#230052]/50 border-[#cdff43] border p-4 flex flex-col items-center text-center">
+              <Card key={speaker.name} className="bg-[#230052]/50 border-[#cdff43] border p-6 transform hover:scale-105 transition-transform duration-300">
                 <CardContent className="p-0">
-                  <div className="w-32 h-32 relative mb-4 mx-auto">
+                  <div className="w-48 h-48 relative mb-6 mx-auto">
                     <Image
                       src={speaker.image}
                       alt={speaker.name}
@@ -220,19 +210,19 @@ export function CLevelTalks() {
                       quality={100}
                     />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-[#cdff43]">{speaker.name}</h3>
-                  <p className="text-gray-200 mb-2">{speaker.role}</p>
-                  <div className="h-12 w-24 relative mx-auto mb-4">
+                  <h3 className="text-2xl font-bold mb-3 text-[#cdff43]">{speaker.name}</h3>
+                  <p className="text-lg text-gray-200 mb-2">{speaker.role}</p>
+                  <div className="h-12 w-32 relative mx-auto mb-4">
                     <Image
-                      src={speaker.companyLogo}
+                      src={speaker.name === "Alex Waltuch" ? IMAGES.logos.google : IMAGES.logos.tapi}
                       alt={speaker.company}
                       fill
                       className="object-contain"
-                      sizes="96px"
+                      sizes="128px"
                       quality={100}
                     />
                   </div>
-                  <p className="text-sm text-gray-300">{speaker.description}</p>
+                  <p className="text-gray-300 text-base leading-relaxed">{speaker.description}</p>
                 </CardContent>
               </Card>
             ))}
